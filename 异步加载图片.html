@@ -1,0 +1,32 @@
+<html>
+  <body>
+    <script>
+      // promise 的产生是为了解决回调地狱 callback hell
+      function loadImg(src) {
+        let img = new Image();
+        return new Promise((resolve, reject) => {
+          (img.onload = () => {
+            resolve(img);
+          })(),
+            (img.onerror = () => {
+              reject(img);
+            })();
+          img.src = src;
+        });
+      }
+      // 这里异步加载两张图片
+      loadImg(src1)
+        .then(img1 => {
+          console.log(img1.width);
+          return loadImg(src2);
+        })
+        .then(img2 => {
+          console.log(img2.width);
+          return img2;
+        })
+        .then(img2 => {
+          console.log(img2.height);
+        });
+    </script>
+  </body>
+</html>

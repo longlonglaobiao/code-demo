@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>手写防抖</title>
+  </head>
+  <body>
+    <input type="text" id="ipt" />
+
+    <script>
+      let ipt = document.getElementById("ipt");
+
+      function debounce(fn, delay = 500) {
+        let timer = null;
+        return function() {
+          if (timer) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(() => {
+            /*
+            Function.apply(obj,args)方法能接收两个参数
+            obj：这个对象将代替Function类里this对象
+            args：这个是参数数组
+            */
+            fn.apply(this, arguments);
+            timer = null;
+          }, delay);
+        };
+      }
+      ipt.addEventListener(
+        "keyup",
+        debounce(() => {
+          console.log(ipt.value);
+        }),
+        600
+      );
+    </script>
+  </body>
+</html>

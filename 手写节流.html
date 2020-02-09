@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <style>
+      #drag {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="drag" draggable="true"></div>
+
+    <script>
+      let dom = document.getElementById("drag");
+
+      function throttle(fn, delay = 100) {
+        let timer = null;
+        return function() {
+          // 这样的写法，好处是，定时器一次一执行
+          if (timer) {
+            // 这里表示如果上一次的定时器还未执行，那么就直接返回，不往下执行设定新的定时器
+            // 如果上一次的定时器执行结束，那么timer 是 null 不会return ，继续往下设定新的定时器
+            return;
+          }
+          timer = setTimeout(() => {
+            fn.apply(this, arguments);
+            timer = null; // 如果执行定时器的任务之后，下一次的拖拽就应该设置新的定时器了
+          }, delay);
+        };
+      }
+
+      dom.addEventListener(
+        "drag",
+        throttle(e => {
+          console.log(e.offsetX, e.offsetY);
+        }, 150)
+      );
+    </script>
+  </body>
+</html>
