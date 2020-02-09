@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>事件代理</title>
+    <style>
+      #ad {
+        width: 100px;
+        height: 200px;
+        border: 1px solid;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="ad">
+      <a href="#">A1</a>
+      <a href="#">A2</a>
+      <a href="#">A3</a>
+      <a href="#">A4</a>
+      <button>测试按钮</button>
+    </div>
+    <script>
+      // 当重复dom元素都需要事件时，我们可以将事件的绑定绑定到他们的父元素，然后针对具体的子元素标签做相关操作
+
+      let ad = document.getElementById("ad");
+      ad.addEventListener("click", e => {
+        let dom = e.target;
+        e.preventDefault(); // 阻止 dom 元素的默认行为（如果是 a 标签，那么点击不会跳转）
+        if (dom.nodeName == "A") {
+          console.log(dom.innerText);
+        }
+      });
+    </script>
+  </body>
+</html>
