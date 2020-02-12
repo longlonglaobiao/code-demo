@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <style>
+      #div1 {
+        width: 300px;
+        height: 500px;
+        border: 1px solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div1"></div>
+    <script>
+      function Elem(id) {
+        this.dom = document.getElementById(id);
+        return this; // 默认有这么一句
+      }
+      Elem.prototype.html = function(sHtml) {
+        let dom = this.dom;
+        if (sHtml) {
+          dom.innerHTML = sHtml;
+        }
+        //console.log(this);
+        return this;
+      };
+      Elem.prototype.on = function(type, fn) {
+        let dom = this.dom;
+
+        //console.log(type);
+
+        dom.addEventListener(type, fn);
+        return this;
+      };
+      let div1 = new Elem("div1"); //document.getElementById("div1");
+      div1
+        .html("<p>p1</p>")
+        .on("click", function() {
+          //e.stopPropagation();
+          console.log("this");
+        })
+        .html("<p>p2</p>");
+    </script>
+  </body>
+</html>

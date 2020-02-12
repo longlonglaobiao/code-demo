@@ -1,0 +1,46 @@
+<html>
+  <body>
+    <script>
+      // 判断是否是对象
+      function isObj(obj) {
+        return typeof obj === "object" && obj !== null;
+      }
+
+      // 判断是否相等
+      function isEquals(obj1, obj2) {
+        if (!isObj(obj1) || !isObj(obj2)) {
+          return obj1 === obj2;
+        }
+        if (Object.keys(obj1).length != Object.keys(obj2).length) {
+          return false;
+        }
+        // 数组和对象都有 for in
+        for (let key in obj1) {
+          // 在 es6 中虽然已经自动包含了 hasOwnProperty
+          if (!obj1.hasOwnProperty(key) || !obj2.hasOwnProperty(key)) {
+            // 判断如果 key 不是 obj1 或者 obj2 的自有属性
+            return false;
+          }
+          // 递归可以解决对象的深度嵌套问题
+          const r = isEquals(obj1[key], obj2[key]);
+          if (!r) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      const obj1 = {
+        a: 1,
+        b: 2,
+        o: { y: 2, x: 1 }
+      };
+      const obj2 = {
+        a: 1,
+        b: 2,
+        o: { x: 1, y: 2 }
+      };
+      console.log(isEquals(obj1, obj2));
+    </script>
+  </body>
+</html>
